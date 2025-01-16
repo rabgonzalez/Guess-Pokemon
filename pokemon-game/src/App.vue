@@ -1,15 +1,10 @@
-<script lang="ts">
+<script setup lang="ts">
 import PokemonGame from './modules/pokemon/views/PokemonGame.vue'
-
-export default {
-  components: {
-    PokemonGame,
-  },
-}
 </script>
 
 <template>
-  <PokemonGame/>
+  <PokemonGame />
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>

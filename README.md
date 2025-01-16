@@ -36,6 +36,12 @@
     - [Pokemon Picture y Pokemon Options](#pokemon-picture-y-pokemon-options)
       - [¿para qué crees que sirven?](#para-qué-crees-que-sirven)
       - [Resultado](#resultado-2)
+- [Reto 3](#reto-3)
+  - [PokemonPicture](#pokemonpicture)
+    - [Estilos](#estilos)
+  - [PokemonOptions](#pokemonoptions)
+    - [Estilos](#estilos-1)
+    - [Resultado](#resultado-3)
 
 # Reto 1
 ## Paso 1: Introducción
@@ -135,7 +141,7 @@ import './assets/styles.css'
 ### Creamos nuestro primer componente
 #### PokemonGame.vue
 En este componente generamos la estructura por medio de la extensión de Visual Studio **Vue VSCode Snippet**
-> vbase-3
+> vbase-3-ts-setup
 ```ts
 <template>
   <div>
@@ -143,19 +149,9 @@ En este componente generamos la estructura por medio de la extensión de Visual 
   </div>
 </template>
 
-<script>
-export default {
-  setup () {
-    
+<script setup lang="ts"></script>
 
-    return {}
-  }
-}
-</script>
-
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
 ```
 
 ### Preguntas
@@ -165,14 +161,8 @@ Buena pregunta
 #### Saca una captura de como se ve actualmente nuestra aplicación. ¿No ves los cambios? Algo se te olvida... ¿qué es? Indica los archivos que has tenido que modificar.
 Los cambios no se muestran ya que no estamos cargando el componente en App.vue. Tenemos  que importar el Componente que acabamos de crear en la etiqueta **script**
 ```ts
-<script lang="ts">
+<script setup lang="ts">
 import PokemonGame from './modules/pokemon/views/PokemonGame.vue'
-
-export default {
-  components: {
-    PokemonGame,
-  },
-}
 </script>
 ```
 
@@ -193,18 +183,10 @@ Para ocultar la sección, utilizaremos la directiva **v-show**
 
 Para esto, crearemos en la etiqueta **script** una variable que estará inicializada en **false**
 ```ts
-<script>
+<script setup lang="ts">
 import { ref } from 'vue'
 
-const show = ref(false)
-
-export default {
-  setup() {
-    return {
-      show,
-    }
-  },
-}
+const show = ref(false);
 </script>
 ```
 
@@ -232,25 +214,11 @@ Creamos los componentes *Pokemon Picture* y *Pokemon Options* y los añadimos al
   </section>
 </template>
 
-<script>
+<script setup lang="ts">
 import { ref } from 'vue'
-import PokemonPicture from './PokemonPicture.vue'
-import PokemonOptions from './PokemonOptions.vue'
-
+import PokemonOptions from '../views/PokemonOptions.vue'
+import PokemonPicture from '../views/PokemonPicture.vue'
 const show = ref(false)
-
-export default {
-  setup() {
-    return {
-      show,
-    }
-  },
-
-  components: {
-    PokemonPicture,
-    PokemonOptions,
-  },
-}
 </script>
 
 <style lang="css" scoped></style>
@@ -263,3 +231,66 @@ Lo más probable es que:
 
 #### Resultado
 <img src="./img/scaffold.png" alt="scaffold">
+
+# Reto 3
+## PokemonPicture
+En *PokemonPicture* mostraremos una imagen de Ditto para marcar el diseño que tendrá nuestro programa
+```tsx
+<template>
+  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png" alt="ditto" width="300">
+</template>
+```
+<img src="./img/ditto.png" alt="ditto">
+
+### Estilos
+Le aplicamos los estilos de Tailwind 
+- **brightness-0** (bajamos el brillo a 0 para mostrar la silueta)
+- **h-[200px]** (indicamos el tamaño de la imagen)
+```tsx
+class="brightness-0 h-[200px]"
+```
+<img src="./img/brightness-0.png" alt="brightness-0">
+
+## PokemonOptions
+En el template de *PokemonOptions* Creamos una lista de opciones donde irán los nombres de los posibles Pokémons
+```tsx
+<template>
+  <ul>
+    <li>Pokémon 1</li>
+    <li>Pokémon 2</li>
+    <li>Pokémon 3</li>
+    <li>Pokémon 4</li>
+  </ul>
+</template>
+```
+
+### Estilos
+Aplicamos estilos a la lista.
+Para ello, ponemos @apply dentro de las etiquetas css y escribimos los estilos de tailwind.
+```tsx
+<template>
+  <ul>
+    <li class="btn btn-blue">Pokémon 1</li>
+    <li class="btn btn-blue">Pokémon 2</li>
+    <li class="btn btn-blue">Pokémon 3</li>
+    <li class="btn btn-blue">Pokémon 4</li>
+  </ul>
+</template>
+
+<script setup lang="ts"></script>
+
+<style lang="css" scoped>
+.btn {
+    @apply py-2 px-4 my-2 rounded;
+  }
+  .btn-blue {
+    @apply bg-blue-500 text-white;
+  }
+  .btn-blue:hover {
+    @apply bg-blue-700;
+  }
+</style>
+```
+
+### Resultado
+<img src="./img/base.png" alt="base">

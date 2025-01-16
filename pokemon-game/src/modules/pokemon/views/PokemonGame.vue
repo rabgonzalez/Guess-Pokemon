@@ -10,25 +10,11 @@
   </section>
 </template>
 
-<script>
+<script setup lang="ts">
 import { ref } from 'vue'
-import PokemonPicture from './PokemonPicture.vue'
-import PokemonOptions from './PokemonOptions.vue'
-
+import PokemonOptions from '../views/PokemonOptions.vue'
+import PokemonPicture from '../views/PokemonPicture.vue'
 const show = ref(false)
-
-export default {
-  setup() {
-    return {
-      show,
-    }
-  },
-
-  components: {
-    PokemonPicture,
-    PokemonOptions,
-  },
-}
 </script>
 
 <style lang="css" scoped></style>

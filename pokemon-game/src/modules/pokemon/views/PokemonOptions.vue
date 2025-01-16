@@ -1,13 +1,22 @@
 <template>
-  <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">Aquí van las opciones a elegir</button>
+  <ul>
+    <li class="btn btn-blue">Pokémon 1</li>
+    <li class="btn btn-blue">Pokémon 2</li>
+    <li class="btn btn-blue">Pokémon 3</li>
+    <li class="btn btn-blue">Pokémon 4</li>
+  </ul>
 </template>
 
-<script>
-export default {
-  setup() {
-    return {}
-  },
-}
-</script>
+<script setup lang="ts"></script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped>
+.btn {
+    @apply py-2 px-4 my-2 rounded;
+  }
+  .btn-blue {
+    @apply bg-blue-500 text-white;
+  }
+  .btn-blue:hover {
+    @apply bg-blue-700;
+  }
+</style>

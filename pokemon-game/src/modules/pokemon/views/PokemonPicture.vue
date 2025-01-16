@@ -1,13 +1,8 @@
 <template>
-  <h1>Aquí va la silueta del Pokémon</h1>
+  <img class="brightness-0 h-[200px]" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png" alt="ditto">
 </template>
 
-<script>
-export default {
-  setup() {
-    return {}
-  },
-}
+<script setup lang="ts">
 </script>
 
 <style lang="scss" scoped></style>
