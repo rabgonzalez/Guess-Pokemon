@@ -156,7 +156,9 @@ En este componente generamos la estructura por medio de la extensión de Visual 
 
 ### Preguntas
 #### ¿Para qué sirven las clases que hemos añadido?
-Buena pregunta
+- **Template:** es lo que se renderiza de nuestra aplicacion, todo los elementos visuales
+- **Script:** es la parte lógica de la aplicación, contiene los métodos, variables, imports...
+- **Style:** es el apartado de los estilos, mejora la estructura y la visualización d e los elemtntos.
 
 #### Saca una captura de como se ve actualmente nuestra aplicación. ¿No ves los cambios? Algo se te olvida... ¿qué es? Indica los archivos que has tenido que modificar.
 Los cambios no se muestran ya que no estamos cargando el componente en App.vue. Tenemos  que importar el Componente que acabamos de crear en la etiqueta **script**

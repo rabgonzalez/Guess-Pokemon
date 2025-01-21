@@ -5,4 +5,11 @@
 <script setup lang="ts">
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+img {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+}
+</style>
