@@ -4,7 +4,7 @@
     <h3 class="animate-pulse">Cargando Pokémons</h3>
   </section>
   <section class="flex flex-col justify-center items-center w-screen h-screen">
-    <h1>¿Quién es este Pokémon?</h1>
+    <h1 class="m-5">¿Quién es este Pokémon?</h1>
     <PokemonPicture />
     <PokemonOptions />
   </section>
@@ -14,7 +14,9 @@
 import { ref } from 'vue'
 import PokemonOptions from '../views/PokemonOptions.vue'
 import PokemonPicture from '../views/PokemonPicture.vue'
+import { usePokemonGame } from '../composables/usePokemonGame';
 const show = ref(false)
+const { gameStatus } = usePokemonGame();
 </script>
 
 <style lang="css" scoped></style>
