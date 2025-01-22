@@ -23,25 +23,41 @@
     - [App.vue](#appvue)
     - [Eliminamos los archivos Assets/base.css y Assets/logo.svg](#eliminamos-los-archivos-assetsbasecss-y-assetslogosvg)
     - [Renombramos el archivo Assets/main.css \> Assets/styles.css](#renombramos-el-archivo-assetsmaincss--assetsstylescss)
-      - [Resultado](#resultado)
+    - [Resultado](#resultado)
 - [Reto 2](#reto-2)
-    - [Estructuración del proyecto](#estructuración-del-proyecto)
-    - [Creamos nuestro primer componente](#creamos-nuestro-primer-componente)
-      - [PokemonGame.vue](#pokemongamevue)
-    - [Preguntas](#preguntas)
-      - [¿Para qué sirven las clases que hemos añadido?](#para-qué-sirven-las-clases-que-hemos-añadido)
-      - [Saca una captura de como se ve actualmente nuestra aplicación. ¿No ves los cambios? Algo se te olvida... ¿qué es? Indica los archivos que has tenido que modificar.](#saca-una-captura-de-como-se-ve-actualmente-nuestra-aplicación-no-ves-los-cambios-algo-se-te-olvida-qué-es-indica-los-archivos-que-has-tenido-que-modificar)
-    - [Ocultar una sección con directivas](#ocultar-una-sección-con-directivas)
-      - [Resultado](#resultado-1)
+  - [Estructuración del proyecto](#estructuración-del-proyecto)
+  - [Creamos nuestro primer componente](#creamos-nuestro-primer-componente)
+    - [PokemonGame.vue](#pokemongamevue)
+  - [Preguntas](#preguntas)
+    - [¿Para qué sirven las clases que hemos añadido?](#para-qué-sirven-las-clases-que-hemos-añadido)
+    - [Saca una captura de como se ve actualmente nuestra aplicación. ¿No ves los cambios? Algo se te olvida... ¿qué es? Indica los archivos que has tenido que modificar.](#saca-una-captura-de-como-se-ve-actualmente-nuestra-aplicación-no-ves-los-cambios-algo-se-te-olvida-qué-es-indica-los-archivos-que-has-tenido-que-modificar)
+  - [Ocultar una sección con directivas](#ocultar-una-sección-con-directivas)
+    - [Resultado](#resultado-1)
     - [Pokemon Picture y Pokemon Options](#pokemon-picture-y-pokemon-options)
       - [¿para qué crees que sirven?](#para-qué-crees-que-sirven)
-      - [Resultado](#resultado-2)
+    - [Resultado](#resultado-2)
 - [Reto 3](#reto-3)
   - [PokemonPicture](#pokemonpicture)
     - [Estilos](#estilos)
   - [PokemonOptions](#pokemonoptions)
     - [Estilos](#estilos-1)
-    - [Resultado](#resultado-3)
+  - [Resultado](#resultado-3)
+- [Reto 4](#reto-4)
+  - [Animation.css](#animationcss)
+  - [game-status.enum.ts](#game-statusenumts)
+  - [index.ts](#indexts)
+    - [¿Qué es un archivo de barril y cuáles son sus ventajas?](#qué-es-un-archivo-de-barril-y-cuáles-son-sus-ventajas)
+  - [usePokemonGame.ts](#usepokemongamets)
+    - [¿Qué es lo que estamos haciendo con el código hasta ahora?](#qué-es-lo-que-estamos-haciendo-con-el-código-hasta-ahora)
+  - [Axios](#axios)
+    - [¿Qué es Axios? ¿Lo has usado antes?](#qué-es-axios-lo-has-usado-antes)
+  - [pokemonApi.ts](#pokemonapits)
+  - [usePokemonGame.ts](#usepokemongamets-1)
+  - [Resultado](#resultado-4)
+  - [Postman](#postman)
+    - [pokemon-list.response.ts](#pokemon-listresponsets)
+  - [usePokemonGame.ts](#usepokemongamets-2)
+  - [Resultado](#resultado-5)
 
 # Reto 1
 ## Paso 1: Introducción
@@ -130,16 +146,16 @@ Screaming architecture consiste en un concepto en el que la arquitectura del pro
 import './assets/styles.css'
 ```
 
-#### Resultado
+### Resultado
 <img src="./img/hello-world.png" alt="hello-world">
 
 ---
 # Reto 2
-### Estructuración del proyecto
+## Estructuración del proyecto
 <img src="./img/screaming-architecture.png" alt="screaming-architecture">
 
-### Creamos nuestro primer componente
-#### PokemonGame.vue
+## Creamos nuestro primer componente
+### PokemonGame.vue
 En este componente generamos la estructura por medio de la extensión de Visual Studio **Vue VSCode Snippet**
 > vbase-3-ts-setup
 ```ts
@@ -154,13 +170,13 @@ En este componente generamos la estructura por medio de la extensión de Visual 
 <style lang="scss" scoped></style>
 ```
 
-### Preguntas
-#### ¿Para qué sirven las clases que hemos añadido?
+## Preguntas
+### ¿Para qué sirven las clases que hemos añadido?
 - **Template:** es lo que se renderiza de nuestra aplicacion, todo los elementos visuales
 - **Script:** es la parte lógica de la aplicación, contiene los métodos, variables, imports...
 - **Style:** es el apartado de los estilos, mejora la estructura y la visualización d e los elemtntos.
 
-#### Saca una captura de como se ve actualmente nuestra aplicación. ¿No ves los cambios? Algo se te olvida... ¿qué es? Indica los archivos que has tenido que modificar.
+### Saca una captura de como se ve actualmente nuestra aplicación. ¿No ves los cambios? Algo se te olvida... ¿qué es? Indica los archivos que has tenido que modificar.
 Los cambios no se muestran ya que no estamos cargando el componente en App.vue. Tenemos  que importar el Componente que acabamos de crear en la etiqueta **script**
 ```ts
 <script setup lang="ts">
@@ -178,7 +194,7 @@ Y en la etiqueta **template** cargar el Componente *PokemonGame*
 Ahora accedemos a la url http://localhost:5173/ y vemos el resultado
 <img src="./img/PokemonGame.png" alt="pokemonGame">
 
-### Ocultar una sección con directivas
+## Ocultar una sección con directivas
 Para ocultar la sección, utilizaremos la directiva **v-show**
 > [!NOTE]
 > v-show es una directiva que solo renderiza la etiqueta y sus subgrupos si la condición es verdadera.
@@ -197,7 +213,7 @@ Por último, en la etiqueta **section** añadimos la directiva v-show, de modo q
   <section class="flex flex-col justify-center items-center w-screen h-screen" v-show="show">
 ```
 
-#### Resultado
+### Resultado
 Efectivamente, la etiqueta section no se mostrará ya que la variable show es falsa
 <img src="./img/v-show.png" alt="v-show">
 
@@ -231,7 +247,7 @@ Lo más probable es que:
 - En Pokemon Picture almacenemos las imágenes de los pokemons: las siluetas y la imagen al revelarlo
 - En Pokemon Options mostremos las posibles opciones para adivinar al pokémon por si silueta
 
-#### Resultado
+### Resultado
 <img src="./img/scaffold.png" alt="scaffold">
 
 # Reto 3
@@ -294,5 +310,76 @@ Para ello, ponemos @apply dentro de las etiquetas css y escribimos los estilos d
 </style>
 ```
 
-### Resultado
+## Resultado
 <img src="./img/base.png" alt="base">
+
+# Reto 4
+## Animation.css
+Añadimos el archivo *animation.css* a src/assets/
+
+<img src="./img/animation.png" alt="animation.css">
+
+## game-status.enum.ts
+<img src="./img/game-status.enum.png" alt="game-status enum">
+
+## index.ts
+```ts
+export * from './game-status.enum';
+```
+
+### ¿Qué es un archivo de barril y cuáles son sus ventajas?
+Es un archivo para almacenar todos los imports
+
+## usePokemonGame.ts
+<img src="./img/usePokemonGame.png" alt="usePokemonGame">
+
+### ¿Qué es lo que estamos haciendo con el código hasta ahora?
+Hemos creado un enum con los posibles estados de una partida y hemos creado una variable reactiva para almacenar el estado de la partida actual.
+
+## Axios
+### ¿Qué es Axios? ¿Lo has usado antes?
+Axios es una librería para facilitar las comunicacion entre la aplicación y la API por medio de solicitudes HTTP
+
+> npm install axios
+
+```bash
+added 9 packages, and audited 281 packages in 3s
+
+37 packages are looking for funding
+run `npm fund` for details
+
+19 vulnerabilities (9 moderate, 7 high, 3 critical)
+
+To address issues that do not require attention, run:
+npm audit fix
+
+To address all issues (including breaking changes), run:
+npm audit fix --force
+
+Run `npm audit` for details.
+```
+
+## pokemonApi.ts
+<img src="./img/pokemonApi.png" alt="pokemonApi">
+
+## usePokemonGame.ts
+<img src="./img/usePokemonaxios.png" alt="usePokemon with axios">
+
+## Resultado
+<img src="./img/axiosConsole.png" alt="axios result">
+
+## Postman
+<img src="./img/postman.png" alt="peticion postman">
+
+### pokemon-list.response.ts
+> Control+P
+
+> JSON to TS: Convert from fromClipboard
+
+<img src="./img/response.png" alt="response to ts">
+
+## usePokemonGame.ts
+<img src="./img/reto4.png" alt="reto 4">
+
+## Resultado
+<img src="./img/reto4-final.png" alt="reto 4 final">
