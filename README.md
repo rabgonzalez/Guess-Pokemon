@@ -58,6 +58,13 @@
     - [pokemon-list.response.ts](#pokemon-listresponsets)
   - [usePokemonGame.ts](#usepokemongamets-2)
   - [Resultado](#resultado-5)
+- [Reto 5](#reto-5)
+  - [pokemon.interface.ts](#pokemoninterfacets)
+  - [getPokemons](#getpokemons)
+    - [¿Qué es lo que estamos haciendo?](#qué-es-lo-que-estamos-haciendo)
+    - [¿Para qué sirve la línea de código: const id = urlParts\[urlParts.length - 2\] ?? 0;?](#para-qué-sirve-la-línea-de-código-const-id--urlpartsurlpartslength---2--0)
+  - [usePokemons.ts](#usepokemonsts)
+    - [devolver la lista desordenada](#devolver-la-lista-desordenada)
 
 # Reto 1
 ## Paso 1: Introducción
@@ -383,3 +390,51 @@ Run `npm audit` for details.
 
 ## Resultado
 <img src="./img/reto4-final.png" alt="reto 4 final">
+
+# Reto 5
+## pokemon.interface.ts
+Creamos una interfaz para definir la estructura de datos que queremos almacenar de los pokemon.
+```tsx
+export interface Pokemon {
+  id: number;
+  name: string;
+}
+```
+
+## getPokemons
+<img src="./img/consultaTipada.png" alt="getPokemons tipado">
+
+### ¿Qué es lo que estamos haciendo? 
+Modificamos el método de getPokemons() para que nos devuelva un array de los pokemons siguiendo la estructura antes creada **{ id: number, name: string }**
+
+### ¿Para qué sirve la línea de código: const id = urlParts[urlParts.length - 2] ?? 0;?
+Estamos obteniendo el id del pokemon de la url que nos proporciona la API.
+
+con el método **.split('/')** estamos dividiendo la url del pokemon en cada **/** y insertando los elementos en un array, por lo que  tendremos que obtener la posición del array en la que se encuentre el id.
+
+La estructura de la url es la siguiente: "https://pokeapi.co/api/v2/pokemon/1/". Por lo que si la seperamos por **/** nos quedaría un array así:
+
+**[ "https:", "", "pokeapi.co", "api", "v2", "pokemon", "1", "" ]**
+
+La posición del id ("1") en el array es la 6 (los arrays empiezan or la posición 0), y al hacer urlParts.length nos devolverá 8, por lo que para obtener la id irémos a la posición urlParts[urlParts.length - 2]
+
+Las interrogaciones **??** sirven para indicar que devolver en caso de que lo que busquemos no exista, por lo que si no hubiera un elemento en la posición 6 de urlParts devolvería 0.
+
+## usePokemons.ts
+```tsx
+onMounted(async() => {
+    const pokemons = await getPokemons();
+
+    console.log({pokemons});
+})
+```
+<img src="./img/pokemons.png" alt="pokemons">
+
+### devolver la lista desordenada
+Para desordenar la lista, usamos el método sort *(compara los elementos de 2 en 2, si el valor es positivo, sustituye el primer elemento por el segundo)*
+
+Para hacer que sea aleatorio, el valor que comprueba el sort es un número aleatorio del -0.5 al 0.5, por lo que si sale algún número mayor que 0 se intercambian la posición.
+```tsx
+pokemonArray.sort(() => Math.random() - 0.5);
+```
+<img src="./img/randomOrder.png" alt="pokemons desordenados">
