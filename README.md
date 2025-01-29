@@ -65,6 +65,16 @@
     - [¿Para qué sirve la línea de código: const id = urlParts\[urlParts.length - 2\] ?? 0;?](#para-qué-sirve-la-línea-de-código-const-id--urlpartsurlpartslength---2--0)
   - [usePokemons.ts](#usepokemonsts)
     - [devolver la lista desordenada](#devolver-la-lista-desordenada)
+    - [Resultado](#resultado-6)
+- [Reto 6](#reto-6)
+  - [usePokemonGame.ts](#usepokemongamets-3)
+    - [¿Qué es una propiedad computada?](#qué-es-una-propiedad-computada)
+  - [PokemonGame.vue](#pokemongamevue-1)
+  - [usePokemonGame.ts](#usepokemongamets-4)
+    - [onMounted()](#onmounted)
+    - [pokemonOptions](#pokemonoptions-1)
+      - [¿Cómo funciona este fragmento de código?](#cómo-funciona-este-fragmento-de-código)
+      - [¿Cómo determinamos cuál es el Pokemon correcto?](#cómo-determinamos-cuál-es-el-pokemon-correcto)
 
 # Reto 1
 ## Paso 1: Introducción
@@ -437,4 +447,55 @@ Para hacer que sea aleatorio, el valor que comprueba el sort es un número aleat
 ```tsx
 pokemonArray.sort(() => Math.random() - 0.5);
 ```
+
+### Resultado
 <img src="./img/randomOrder.png" alt="pokemons desordenados">
+
+# Reto 6
+## usePokemonGame.ts
+Añadimos el método computado para saber si han cargado los pokemons o no.
+```tsx
+const isLoading = computed(() => pokemons.value.length === 0);
+```
+
+### ¿Qué es una propiedad computada?
+https://codingpotions.com/vue-computadas/
+
+## PokemonGame.vue
+Añadimos un if-else en la sección para que cargué una sección u otra en función de si han cargado los pokemons o no.
+<img src="./img/isLoading.png" alt="isLoading">
+
+## usePokemonGame.ts
+### onMounted()
+En **usePokemonGame.ts** añadimos un setTimeout() en el método onMounted() para que la variable pokemons tarde 1000 milésimas de segundo en modificarse, dando tiempo a ver la sección que contiene el if.
+```tsx
+onMounted(async() => {
+  const response = await getPokemons();
+  setTimeout(() => {
+    pokemons.value = response;
+  }, 1000);
+  console.log({pokemons});
+})
+```
+
+### pokemonOptions
+Añadimos una variable reactiva llamada *pokemonOptions* con las opciones de los pokemons.
+Luego creamos un método para obtener esas opciones.
+```tsx
+const pokemonOptions = ref<Pokemon[]>([]);
+
+const getNextOptions = (howMany: number = 4) => {
+  gameStatus.value = GameStatus.Playing;
+  pokemonOptions.value = pokemons.value.slice(0, howMany);
+  pokemons.value = pokemons.value.slice(howMany);
+}
+```
+
+#### ¿Cómo funciona este fragmento de código?
+Obtiene los primeros 4 pokemons de la lista.
+
+> console.log(pokemonOptions.value);
+
+<img src="./img/pokemonOptions.png" alt="pokemonOptions">
+
+#### ¿Cómo determinamos cuál es el Pokemon correcto? 
