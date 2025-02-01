@@ -459,7 +459,8 @@ const isLoading = computed(() => pokemons.value.length === 0);
 ```
 
 ### ¿Qué es una propiedad computada?
-https://codingpotions.com/vue-computadas/
+Una propiedad conmutada es una variable que obtiene su valor realizando operaciones sobre otras variables, 
+de modo que si estas variables se modifican la propiedad computada se actualiza automáticamente
 
 ## PokemonGame.vue
 Añadimos un if-else en la sección para que cargué una sección u otra en función de si han cargado los pokemons o no.
