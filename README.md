@@ -74,7 +74,32 @@
     - [onMounted()](#onmounted)
     - [pokemonOptions](#pokemonoptions-1)
       - [¿Cómo funciona este fragmento de código?](#cómo-funciona-este-fragmento-de-código)
-      - [¿Cómo determinamos cuál es el Pokemon correcto?](#cómo-determinamos-cuál-es-el-pokemon-correcto)
+    - [¿Cómo determinamos cuál es el Pokemon correcto?](#cómo-determinamos-cuál-es-el-pokemon-correcto)
+      - [Resultado](#resultado-7)
+    - [¿Qué estamos haciendo aquí?](#qué-estamos-haciendo-aquí)
+  - [PokemonPicture.vue](#pokemonpicturevue)
+    - [Resultado](#resultado-8)
+  - [Mostrar la imagen al acertar](#mostrar-la-imagen-al-acertar)
+    - [Resultado](#resultado-9)
+    - [Aplicar el estilo fade-in en el v-else](#aplicar-el-estilo-fade-in-en-el-v-else)
+    - [Modificar el showPokemon para que muestre true cuando el juego haya terminado](#modificar-el-showpokemon-para-que-muestre-true-cuando-el-juego-haya-terminado)
+  - [PokemonOptions.vue](#pokemonoptionsvue)
+    - [Creamos un bucle for que cree un botón los nombres de cada uno de los pokemons](#creamos-un-bucle-for-que-cree-un-botón-los-nombres-de-cada-uno-de-los-pokemons)
+      - [Explica el funcionamiento del componente hasta ahora](#explica-el-funcionamiento-del-componente-hasta-ahora)
+      - [Resultado](#resultado-10)
+  - [Emitir el click](#emitir-el-click)
+    - [PokemonOptions.vue](#pokemonoptionsvue-1)
+    - [PokemonGame.vue](#pokemongamevue-2)
+      - [Resultado](#resultado-11)
+  - [Comprobar perder](#comprobar-perder)
+    - [checkAnswer](#checkanswer)
+    - [bloquear botones](#bloquear-botones)
+      - [PokemonGame.vue](#pokemongamevue-3)
+      - [PokemonOptions.vue](#pokemonoptionsvue-2)
+- [Extra](#extra)
+  - [Mostrar el nombre del pokemon cuando termine de jugar](#mostrar-el-nombre-del-pokemon-cuando-termine-de-jugar)
+  - [Añadir boton de reiniciar cuando termine de jugar](#añadir-boton-de-reiniciar-cuando-termine-de-jugar)
+    - [Resultado](#resultado-12)
 
 # Reto 1
 ## Paso 1: Introducción
@@ -493,10 +518,172 @@ const getNextOptions = (howMany: number = 4) => {
 ```
 
 #### ¿Cómo funciona este fragmento de código?
-Obtiene los primeros 4 pokemons de la lista.
+Obtiene los primeros 4 pokemons de la lista y elimina esos pokemons del total.
 
 > console.log(pokemonOptions.value);
 
 <img src="./img/pokemonOptions.png" alt="pokemonOptions">
 
-#### ¿Cómo determinamos cuál es el Pokemon correcto? 
+### ¿Cómo determinamos cuál es el Pokemon correcto? 
+Creamos una propiedad conmutada que selecciona un pokemon aleatorio dentro de la lista de opciones
+```tsx
+const randomPokemon = computed(() => {
+    const randomIndex = Math.floor(Math.random() * pokemonOptions.value.length);
+    return pokemonOptions.value[randomIndex];
+  });
+```
+
+Lo mostramos en nuestro componente
+> <h3>{{ randomPokemon }}</h3>
+
+#### Resultado
+<img src="./img/randomPokemon.png" alt="randomPokemon">
+
+### ¿Qué estamos haciendo aquí?
+>  <PokemonPicture :pokemon-id="randomPokemon.id" />
+
+Le estamos pasando por props a **PokemonPicture** una variable llamada **pokemon-id** que tiene el valor de *randomPokemon.id*
+
+## PokemonPicture.vue
+- Definimos las props
+```tsx
+<script setup lang="ts">
+interface Props {
+  pokemonId: number
+}
+</script>
+```
+
+- Creamos una propiedad computada que obtiene la imagen del pokemon con ese id
+<img src="./img/pokemonImage.png" alt="pokemonImage">
+
+### Resultado
+<img src="./img/pokemonImageResult.png" alt="pokemonImageResult">
+
+## Mostrar la imagen al acertar
+Creamos otra propiedad en **PokemonGame.vue** llamada *show-pokemon* para determinar si se muestra la silueta o la imagen a color del pokemon.
+
+>  <PokemonPicture :pokemon-id="randomPokemon.id" :show-pokemon="true" />
+
+Y en **PokemonPicture** definimos la directiva **v-if** o **v-else** para saber cúal mostrar
+```tsx
+<template>
+  <section>
+    <img v-if="!showPokemon" class="brightness-0 h-[200px]" :src="pokemonImage" />
+    <img v-else class="h-[200px]" :src="pokemonImage" />
+  </section>
+</template>
+```
+
+### Resultado
+<img src="./img/showPokemonResult.png" alt="showPokemonResult">
+
+### Aplicar el estilo fade-in en el v-else
+```tsx
+<style scoped>
+@import '../../../assets/animations.css';
+
+img {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+}
+</style>
+```
+
+> <img v-else class="fade-in h-[200px]" :src="pokemonImage" />
+
+### Modificar el showPokemon para que muestre true cuando el juego haya terminado
+> <PokemonPicture :pokemon-id="randomPokemon.id" :show-pokemon="gameStatus !== GameStatus.Playing"/>
+
+## PokemonOptions.vue
+Le pasamos por props a **PokemonPicture.vue** las opciones 
+>  <PokemonOptions :options="pokemonOptions" />
+
+### Creamos un bucle for que cree un botón los nombres de cada uno de los pokemons
+<img src="./img/pokemonOptionsFor.png" alt="pokemonOptionsFor">
+
+#### Explica el funcionamiento del componente hasta ahora
+Estamos obteniendo las opciones a elegir de pokemons mediante props de *usePokemonGame.ts* y las estamos mostrando con un bucle for en forma de botones
+
+#### Resultado
+<img src="./img/pokemonOptionsResult.png" alt="pokemonOptionsResult">
+
+## Emitir el click
+### PokemonOptions.vue
+<img src="./img/defineEmits.png" alt="defineEmits">
+
+### PokemonGame.vue
+>  <PokemonOptions :options="pokemonOptions" @selected-option="onSelectedOption" />
+```tsx
+const onSelectedOption = (value: number) => {
+  console.log({ value })
+}
+```
+
+#### Resultado
+<img src="./img/defineEmitsResult.png" alt="defineEmitsResult">
+
+## Comprobar perder
+### checkAnswer
+```tsx
+const checkAnswer = (id: number) => {
+  const hasWon = id === randomPokemon.value.id;
+  if(hasWon) {
+    gameStatus.value = GameStatus.Won;
+
+    confetti({
+      particleCount: 300,
+      spread: 150,
+      origin: { y: 0.6 }
+    });
+    return;
+  }
+
+  gameStatus.value = GameStatus.Lost;
+}
+```
+
+### bloquear botones
+#### PokemonGame.vue
+```tsx
+<PokemonOptions
+  :options="pokemonOptions"
+  @selected-option="checkAnswer"
+  :block-selection="gameStatus != GameStatus.Playing"
+/>
+```
+
+#### PokemonOptions.vue
+> :disabled="blockSelection"
+
+# Extra
+## Mostrar el nombre del pokemon cuando termine de jugar
+>  <h1 v-if="gameStatus !== GameStatus.Playing">{{ randomPokemon.name }}</h1>
+
+## Añadir boton de reiniciar cuando termine de jugar
+```tsx
+<button
+    v-if="gameStatus !== GameStatus.Playing"
+    class="restart restart-red"
+    @click="getNextOptions()"
+  >
+    Reiniciar
+</button>
+```
+
+Si os acordaís, el método **getNextOptions()** de usePokemonGame.ts obtiene los 4 primeros pokemons de la lista y los elimina del total, por lo que llamando a esta funcion podemos reiniciar el juego facilmente.
+```tsx
+const getNextOptions = (howMany: number = 4) => {
+  gameStatus.value = GameStatus.Playing;
+  pokemonOptions.value = pokemons.value.slice(0, howMany);
+  pokemons.value = pokemons.value.slice(howMany);
+}
+```
+
+Además, el método nos pone el gameStatus en Playing, por lo que volverá a ocultarse la imagen y las opciones serán clickables de nuevo.
+
+### Resultado
+<img src="./img/resultPlaying.png" alt="resultPlaying">
+<img src="./img/finalResult.png" alt="finalResult"> 
