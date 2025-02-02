@@ -6,6 +6,10 @@ export const usePokemonGame = () => {
   let pokemons = ref<Pokemon[]>([]);
   const isLoading = computed(() => pokemons.value.length === 0);
   const pokemonOptions = ref<Pokemon[]>([]);
+  const randomPokemon = computed(() => {
+    const randomIndex = Math.floor(Math.random() * pokemonOptions.value.length);
+    return pokemonOptions.value[randomIndex];
+  });
 
   const getNextOptions = (howMany: number = 4) => {
     gameStatus.value = GameStatus.Playing;
@@ -38,5 +42,6 @@ export const usePokemonGame = () => {
     isLoading,
     pokemonOptions,
     getNextOptions,
+    randomPokemon,
   }
 }

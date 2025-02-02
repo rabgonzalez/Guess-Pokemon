@@ -1,15 +1,31 @@
 <template>
   <section class="mt-5">
-    <ul>
-      <li class="btn btn-blue">Pokémon 1</li>
-      <li class="btn btn-blue">Pokémon 2</li>
-      <li class="btn btn-blue">Pokémon 3</li>
-      <li class="btn btn-blue">Pokémon 4</li>
-    </ul>
+    <button
+      v-for="{ name, id } in options"
+      :key="id"
+      :class="!blockSelection ? 'capitalize btn btn-blue btn-blue:hover w-full' : 'capitalize btn btn-gray w-full'"
+      @click="$emit('selectedOption', id)"
+      :disabled="blockSelection"
+    >
+      {{ name }}
+    </button>
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { Pokemon } from '../interfaces'
+
+interface Props {
+  options: Pokemon[];
+  blockSelection: boolean;
+}
+
+const { options } = defineProps<Props>()
+
+defineEmits<{
+  selectedOption: [id: number]
+}>()
+</script>
 
 <style lang="css" scoped>
 .btn {
@@ -18,10 +34,10 @@
 .btn-blue {
   @apply bg-blue-500 text-white;
 }
+.btn-gray {
+  @apply bg-gray-500 text-white;
+}
 .btn-blue:hover {
   @apply bg-blue-700;
-}
-li {
-  @apply bg-white shadow-md rounded-lg p-3 m-2 cursor-pointer w-40 text-center transition-all hover:bg-gray-100;
 }
 </style>
